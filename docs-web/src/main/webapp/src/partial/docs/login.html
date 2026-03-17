@@ -24,6 +24,33 @@
     font-size: 90%;
     color: #666;
   }
+
+  .btn-login-row {
+    margin-bottom: 10px;
+  }
+
+  .btn-guest-login {
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    color: #555;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-guest-login:hover,
+  .btn-guest-login:focus {
+    background: #fff;
+    border-color: #cfcfcf;
+    color: #333;
+  }
+
+  .btn-guest-login:active {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+  }
 </style>
 <div class="row vertical-center">
   <div class="col-sm-6 col-xs-12 login-box">
@@ -60,7 +87,7 @@
             </label>
           </div>
 
-          <div class="row">
+          <div class="row btn-login-row">
             <div class="col-md-6">
               <button type="submit" class="btn btn-primary" ng-click="login()">
                 <span class="fas fa-check"></span> {{ 'login.submit' | translate }}
@@ -74,10 +101,13 @@
             </div>
           </div>
 
-          <p class="text-center" ng-if="app.guest_login">&nbsp;</p>
-
-          <button type="submit" class="btn btn-default btn-block" ng-if="app.guest_login" ng-click="loginAsGuest()">
-            <span class="fas fa-user"></span> {{ 'login.login_as_guest' | translate }}
+          <button
+            type="submit"
+            class="btn btn-default btn-block btn-guest-login"
+            ng-if="app.guest_login"
+            ng-click="loginAsGuest()">
+            <span class="fas fa-user"></span>
+            <span>{{ 'login.login_as_guest' | translate }}</span>
           </button>
         </form>
       </div>
