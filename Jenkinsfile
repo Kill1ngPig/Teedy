@@ -31,16 +31,9 @@ pipeline {
                 bat 'mvn jacoco:report'
             }
         }
-
-        stage('Javadoc') {
-            steps {
-                bat 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
-            }
-        }
-
         stage('Site') {
             steps {
-                bat 'mvn site'
+                bat 'mvn site -Dmaven.javadoc.failOnError=false -DskipTests'
             }
         }
 
