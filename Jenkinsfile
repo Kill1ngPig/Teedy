@@ -34,13 +34,13 @@ pipeline {
 
         stage('Javadoc') {
             steps {
-                bat 'mvn javadoc:javadoc'
+                bat 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
             }
         }
 
         stage('Site') {
             steps {
-                bat 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
+                bat 'mvn javadoc:javadoc'
             }
         }
 
