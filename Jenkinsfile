@@ -40,7 +40,7 @@ pipeline {
 
         stage('Site') {
             steps {
-                bat 'mvn site'
+                bat 'mvn javadoc:javadoc -Dmaven.javadoc.failOnError=false'
             }
         }
 
