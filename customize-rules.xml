@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Rules"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
+
+    <!-- Cyclomatic Complexity -->
+    <rule ref="category/java/design.xml/CyclomaticComplexity"/>
+
+    <!-- Too many methods / WMC -->
+    <rule ref="category/java/design.xml/TooManyMethods"/>
+
+    <!-- Coupling Between Objects -->
+    <rule ref="category/java/design.xml/CouplingBetweenObjects"/>
+
+    <!-- Lack of Cohesion -->
+    <rule ref="category/java/design.xml/GodClass"/>
+
+    <!-- Lines of Code -->
+    <rule ref="category/java/design.xml/ExcessiveClassLength"/>
+</ruleset>
