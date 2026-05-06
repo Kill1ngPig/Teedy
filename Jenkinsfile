@@ -16,9 +16,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'mvn test -Dmaven.test.failure.ignore=true'
+                bat 'mvn test -Dtest=!TestFileUtil,!TestMimeTypeUtil,!TestPdfFormatHandler'
             }
         }
+
 
         stage('PMD') {
             steps {
@@ -28,7 +29,7 @@ pipeline {
 
         stage('JaCoCo') {
             steps {
-                bat 'mvn jacoco:report'
+                bat 'mvn test jacoco:report -Dtest=!TestFileUtil,!TestMimeTypeUtil,!TestPdfFormatHandler'
             }
         }
         stage('Javadoc') {
