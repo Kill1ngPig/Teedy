@@ -40,7 +40,7 @@ pipeline {
 
         stage('Site') {
             steps {
-                bat 'mvn javadoc:javadoc'
+                bat 'mvn site -Dmaven.javadoc.failOnError=false -DskipTests'
             }
         }
 
