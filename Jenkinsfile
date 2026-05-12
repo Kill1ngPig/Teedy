@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub_credentials')
         DOCKER_IMAGE = 'kill1ngpig/teedy'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
+        WSL_WORKSPACE = "/mnt/c/Users/10623/.jenkins/workspace/teedy"
     }
 
     stages {
@@ -21,36 +21,29 @@ pipeline {
 
         stage('Building image') {
             steps {
-                script {
-                    docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}")
-                }
+                bat 'wsl -u root bash -lc "cd ${WSL_WORKSPACE} && docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."'
             }
         }
 
         stage('Upload Image') {
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
-                        docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").push()
-                        docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").push('latest')
-                    }
-                }
+                bat 'wsl -u root bash -lc "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"'
+                bat 'wsl -u root bash -lc "docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest"'
+                bat 'wsl -u root bash -lc "docker push ${DOCKER_IMAGE}:latest"'
             }
         }
 
         stage('Run containers') {
             steps {
-                script {
-                    bat 'docker rm -f teedy-container-8082 || true'
-                    bat 'docker rm -f teedy-container-8083 || true'
-                    bat 'docker rm -f teedy-container-8084 || true'
+                bat 'wsl -u root bash -lc "docker rm -f teedy-container-8082 || true"'
+                bat 'wsl -u root bash -lc "docker rm -f teedy-container-8083 || true"'
+                bat 'wsl -u root bash -lc "docker rm -f teedy-container-8084 || true"'
 
-                    docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").run('--name teedy-container-8082 -d -p 8082:8080')
-                    docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").run('--name teedy-container-8083 -d -p 8083:8080')
-                    docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").run('--name teedy-container-8084 -d -p 8084:8080')
+                bat 'wsl -u root bash -lc "docker run -d -p 8082:8080 --name teedy-container-8082 ${DOCKER_IMAGE}:${DOCKER_TAG}"'
+                bat 'wsl -u root bash -lc "docker run -d -p 8083:8080 --name teedy-container-8083 ${DOCKER_IMAGE}:${DOCKER_TAG}"'
+                bat 'wsl -u root bash -lc "docker run -d -p 8084:8080 --name teedy-container-8084 ${DOCKER_IMAGE}:${DOCKER_TAG}"'
 
-                    bat 'docker ps --filter "name=teedy-container"'
-                }
+                bat 'wsl -u root bash -lc "docker ps --filter name=teedy-container"'
             }
         }
     }
