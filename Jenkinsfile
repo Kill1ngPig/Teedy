@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'kill1ngpig/teedy'
-        DOCKER_TAG = "${env.BUILD_NUMBER}"
+        DOCKER_TAG = 'latest'
     }
 
     stages {
