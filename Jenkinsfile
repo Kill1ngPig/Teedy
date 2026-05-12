@@ -20,7 +20,7 @@ pipeline {
 
         stage('Building image') {
             steps {
-                bat 'wsl -d Ubuntu-22.04 -u root bash -lc "cd /mnt/c/Users/10623/.jenkins/workspace/teedy && /usr/bin/docker build -t kill1ngpig/teedy:%BUILD_NUMBER% ."'
+                bat 'wsl -d Ubuntu-22.04 -u root bash -lc "cd /mnt/c/Users/10623/.jenkins/workspace/teedy && DOCKER_BUILDKIT=0 /usr/bin/docker build -t kill1ngpig/teedy:%BUILD_NUMBER% ."'
             }
         }
 
